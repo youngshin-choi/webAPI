@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather API</title>
+</head>
+<body>
+  <h1>Weather API Data</h1>
+  <button id="fetchWeather">Fetch Weather Data</button>
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById('fetchWeather').addEventListener('click', async () => {
+      const weatherParams = {
+        serviceKey: 'zKWRxiuWPmCTDfsHy4d07s9HF8Od1Sa1InjsGt5TZpr0mDFGQFFSDEopopBmuJ3d4wz089PBV%2FCDKuR3rkzOFw%3D%3D',
+        pageNo: '1',
+        numOfRows: '10',
+        dataType: 'JSON',
+        dataCd: 'ASOS',
+        dateCd: 'DAY',
+        startDt: '20240301',
+        endDt: '20240301',
+        stnIds: '108' // 서울
+      };
+
+      const baseUrl = 'http://apis.data.go.kr/1360000/AsosDalyInfoService/';
+      const queryString = new URLSearchParams(weatherParams).toString();
+      const url = `${baseUrl}?${queryString}`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('output').textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>

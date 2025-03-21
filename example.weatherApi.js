@@ -1,3 +1,5 @@
+import ApiService from './ApiService.js'; // Import the ApiService class
+
 const weatherApi = new ApiService('http://apis.data.go.kr/1360000/AsosDalyInfoService/', {
   headers: {}
 });
